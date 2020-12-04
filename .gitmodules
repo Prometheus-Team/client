@@ -4,3 +4,6 @@
 [submodule "mapping"]
 	path = mapping
 	url = https://github.com/Prometheus-Team/mapping.git
+[submodule "ui"]
+	path = ui
+	url = https://github.com/Prometheus-Team/User-Interface.git
