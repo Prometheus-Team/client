@@ -61,9 +61,10 @@ class DepthExtractor:
 import time
 d = DepthExtractor('nyu.h5')
 imgs = ['00001.png', '00002.png','00003.png', '00004.png','00005.png', '00006.png', '00007.png', '00008.png', '00009.png', '00010.png']
+imgs = ['i1.jpg', 'i2.jpg', 'i3.jpg', 'i4.jpg']
 
 # for i in range(7, 11):
-for i in range(1, 2):
+for i in range(1, 5):
     inputs = load_images( glob.glob('examples/'+imgs[i-1]) )
     t0 = time.time()
     res = d.getDepthMap(None, inputs)

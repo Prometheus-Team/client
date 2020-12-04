@@ -23,6 +23,6 @@ class Client:
 		self.mapperThread.exportModel()
 
 c = Client()
-time.sleep(2)
+time.sleep(5)
 c.showModel()
 c.exportModel()
