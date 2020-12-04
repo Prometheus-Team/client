@@ -1,6 +1,3 @@
-[submodule "ui"]
-	path = ui
-	url = https://github.com/Prometheus-Team/User-Interface.git
 [submodule "frame_reduction"]
 	path = frame_reduction
 	url = https://github.com/Prometheus-Team/Frame-Reduction-Module.git
