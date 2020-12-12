@@ -36,6 +36,7 @@ class CloudValues:
 
 class ProjectorValues:
 
+	depthModelPath = "dense_depth\\nyu.h5"
 	slantSeparation = 4
 	projectionResolution = (96, 54)
 
@@ -116,33 +117,42 @@ class ClientData:
 # f2.rawFrameData.cameraPosition = (-1,1,-1)
 # f2.rawFrameData.cameraRotation = -40
 
-f1 = DepthFrameData()
+# f1 = DepthFrameData()
 
-f1.depth = np.load('mapping/testdata/i1.npy')/1.5# * 10
-f1.rawFrameData.image = cv.imread('mapping/testdata/i1.jpg')
-f1.rawFrameData.cameraPosition = (0,0,0)
-f1.rawFrameData.cameraRotation = 0
+# f1.depth = np.load('mapping/testdata/i1.npy')/1.5# * 10
+# f1.rawFrameData.image = cv.imread('mapping/testdata/i1.jpg')
+# f1.rawFrameData.cameraPosition = (0,0,0)
+# f1.rawFrameData.cameraRotation = 0
 
-f2 = DepthFrameData()
+# f2 = DepthFrameData()
 
-f2.depth = np.load('mapping/testdata/i2.npy')/1.5# * 10
-f2.rawFrameData.image = cv.imread('mapping/testdata/i2.jpg')
-f2.rawFrameData.cameraPosition = (0,0,1)
-f2.rawFrameData.cameraRotation = 0
+# f2.depth = np.load('mapping/testdata/i2.npy')/1.5# * 10
+# f2.rawFrameData.image = cv.imread('mapping/testdata/i2.jpg')
+# f2.rawFrameData.cameraPosition = (0,0,1)
+# f2.rawFrameData.cameraRotation = 0
 
-f3 = DepthFrameData()
+# f3 = DepthFrameData()
 
-f3.depth = np.load('mapping/testdata/i3.npy')/1.5# * 10
-f3.rawFrameData.image = cv.imread('mapping/testdata/i3.jpg')
-f3.rawFrameData.cameraPosition = (0,0,0)
-f3.rawFrameData.cameraRotation = 45
+# f3.depth = np.load('mapping/testdata/i3.npy')/1.5# * 10
+# f3.rawFrameData.image = cv.imread('mapping/testdata/i3.jpg')
+# f3.rawFrameData.cameraPosition = (0,0,0)
+# f3.rawFrameData.cameraRotation = 45
 
-f4 = DepthFrameData()
+# f4 = DepthFrameData()
 
-f4.depth = np.load('mapping/testdata/i4.npy')/1.5# * 10
-f4.rawFrameData.image = cv.imread('mapping/testdata/i4.jpg')
-f4.rawFrameData.cameraPosition = (0,0,2)
-f4.rawFrameData.cameraRotation = 45
+# f4.depth = np.load('mapping/testdata/i4.npy')/1.5# * 10
+# f4.rawFrameData.image = cv.imread('mapping/testdata/i4.jpg')
+# f4.rawFrameData.cameraPosition = (0,0,2)
+# f4.rawFrameData.cameraRotation = 45
 
-ClientData.depthFrames.extend([f1, f2, f3, f4])
+
+f1 = RawFrameData()
+
+# f1.depth = np.load('mapping/testdata/i1.npy')/1.5# * 10
+f1.image = cv.imread('mapping/testdata/i1.jpg')
+f1.cameraPosition = (0,0,0)
+f1.cameraRotation = 0
+
+
+ClientData.reducedFrames.extend([f1])
 # ClientData.depthFrames.extend([f1, f2])

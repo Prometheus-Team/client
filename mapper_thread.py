@@ -10,7 +10,7 @@ class MapperThread(threading.Thread):
 	showModelTrigger = False
 	exportModelTrigger = False
 
-	def __init__(self, i):
+	def __init__(self):
 		threading.Thread.__init__(self)
 		self.aggregate = Aggregate()
     

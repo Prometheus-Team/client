@@ -1,5 +1,5 @@
 import numpy as np
-from utils import DepthNorm
+from dense_depth.utils import DepthNorm
 from io import BytesIO
 from PIL import Image
 from zipfile import ZipFile

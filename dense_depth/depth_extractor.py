@@ -8,8 +8,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '5'
 from keras.models import load_model
 import skimage.measure as sk
 
-from layers import BilinearUpSampling2D
-from utils import predict, load_images, display_images
+from dense_depth.layers import BilinearUpSampling2D
+from dense_depth.utils import predict, load_images, display_images
 from matplotlib import pyplot as plt
 
 import numpy as np
@@ -58,22 +58,25 @@ class DepthExtractor:
         np.savetxt(fileName+'.csv', outputs, delimiter=',')
         np.save(fileName+'.npy', outputs)
 
-import time
-d = DepthExtractor('nyu.h5')
-imgs = ['00001.png', '00002.png','00003.png', '00004.png','00005.png', '00006.png', '00007.png', '00008.png', '00009.png', '00010.png']
-imgs = ['i1.jpg', 'i2.jpg', 'i3.jpg', 'i4.jpg']
+if __name__=="__main__":
 
-# for i in range(7, 11):
-for i in range(1, 5):
-    inputs = load_images( glob.glob('examples/'+imgs[i-1]) )
-    t0 = time.time()
-    res = d.getDepthMap(None, inputs)
-    print("Time used: ",time.time()-t0)
-    #d.showImg(d.maxPool(res), 'test'+str(i)+'.png')
-    d.saveCsv(d.maxPool(((res * 1666.7) - 66.7)/100), 'test'+str(i))
+    import time
+    d = DepthExtractor('nyu.h5')
+    imgs = ['00001.png', '00002.png','00003.png', '00004.png','00005.png', '00006.png', '00007.png', '00008.png', '00009.png', '00010.png']
+    imgs = ['i1.jpg', 'i2.jpg', 'i3.jpg', 'i4.jpg']
+    imgs = ['00001.png', '00002.png','00003.png']
 
-    # print(np.shape(res))
-    # print(np.shape(d.maxPool(res)))
-    # input("Enter to continue")
+    # for i in range(7, 11):
+    for i in range(1, 5):
+        inputs = load_images( glob.glob('examples/'+imgs[i-1]) )
+        t0 = time.time()
+        res = d.getDepthMap(None, inputs)
+        print("Time used: ",time.time()-t0)
+        #d.showImg(d.maxPool(res), 'test'+str(i)+'.png')
+        d.saveCsv(d.maxPool(((res * 1666.7) - 66.7)/100), 'test'+str(i))
+
+        # print(np.shape(res))
+        # print(np.shape(d.maxPool(res)))
+        # input("Enter to continue")
 
 
