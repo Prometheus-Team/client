@@ -80,3 +80,6 @@ if __name__ == "__main__":
 
 	u = UIThread()
 	u.start()
+	time.sleep(2)
+	ClientData.uiInformation.depthLoaded = True
+	u.mainThreadUpdate()
