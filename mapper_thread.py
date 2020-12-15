@@ -28,7 +28,7 @@ class MapperThread(threading.Thread):
 	def checkExportModel(self):
 		if MapperThread.exportModelTrigger:
 			MapperThread.exportModelTrigger = False
-			OBJExporter.exportModel(self.aggregate.projection.getModel(), ClientData.modelValues.exportPath)
+			OBJExporter.exportModel(self.aggregate.projection.getModel(), ClientData.modelValues.exportPath.value)
 
 
 	def checkShowModel(self):

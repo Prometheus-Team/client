@@ -1,7 +1,20 @@
+
+if __name__ == '__main__':
+
+    import os
+    import sys
+
+    mainDirectory = os.getcwd()
+
+    sys.path.append(mainDirectory + '\\..')
+
+    os.chdir(mainDirectory + '\\..')
+
 import os
 import glob
 import argparse
 import matplotlib
+import time
 
 # Keras / TensorFlow
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '5'
@@ -13,7 +26,6 @@ from dense_depth.utils import predict, load_images, display_images
 from matplotlib import pyplot as plt
 
 import numpy as np
-
 
 # Output depth map size - 260 * 320
 
@@ -27,15 +39,18 @@ class DepthExtractor:
 
         print("Depth extractor initiated")
 
+
     def loadModel(self, modelPath, custom_objects):
+        model = load_model(modelPath, custom_objects=custom_objects, compile=False)
         print('\nModel loaded ({0}).'.format(modelPath))
-        return load_model(modelPath, custom_objects=custom_objects, compile=False)
+        return model
 
     def getDepthMap(self, image, inputs=None):
         if inputs is None:
             im = np.clip(np.asarray(image, dtype=float), 0, 1)
             inputs = np.stack([im], axis=0) 
         
+        print(inputs.shape)
         outputs = predict(self.model, inputs)
         return outputs[0][:,:,0]
 
@@ -61,10 +76,10 @@ class DepthExtractor:
 if __name__=="__main__":
 
     import time
-    d = DepthExtractor('nyu.h5')
+    d = DepthExtractor('dense_depth/nyu.h5')
     imgs = ['00001.png', '00002.png','00003.png', '00004.png','00005.png', '00006.png', '00007.png', '00008.png', '00009.png', '00010.png']
     imgs = ['i1.jpg', 'i2.jpg', 'i3.jpg', 'i4.jpg']
-    imgs = ['00001.png', '00002.png','00003.png']
+    imgs = ['00001.png']
 
     # for i in range(7, 11):
     for i in range(1, 5):

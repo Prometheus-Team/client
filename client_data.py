@@ -1,5 +1,11 @@
 import numpy as np
 import cv2 as cv
+from PIL import Image
+
+class Value:
+
+	def __init__(self, value):
+		self.value = value
 
 class RawFrameData:
 
@@ -9,27 +15,37 @@ class RawFrameData:
 		self.cameraRotation = 0
 		self.time = 0
 
-
 class DepthFrameData:
 
 	def __init__(self):
 		self.rawFrameData = RawFrameData()
 		self.depth = None
 
+class ConnectionValues:
+
+	ip = Value('127.0.0.1')
+	port = Value(33456)
+
+class NavigationValues:
+
+	frontLength = Value(10)
+	backLength = Value(10)
+	rightLength = Value(10)
+	leftLength = Value(10)
 
 class ModelValues:
 
-	modelThreshold = 1
-	exportPath = "Model.obj"
+	modelThreshold = Value(1)
+	exportPath = Value("Model.obj")
 
 
 class CloudValues:
 
-	fieldResolution = 7
+	fieldResolution = Value(7)
 	edgeFieldResolution = 5
-	cloudSetResolution = 100
-	cloudScale = 3
-	pointScale = 6
+	cloudSetResolution = Value(100)
+	cloudScale = Value(3)
+	pointScale = Value(6)
 	cloudVolumeColor = (0.5,1,0.8)
 	cloudBoundsColor = (1,0.4,1)
 	cloudEdgeColor = (0.9,0.8,0.4)
@@ -37,7 +53,7 @@ class CloudValues:
 class ProjectorValues:
 
 	depthModelPath = "dense_depth\\nyu.h5"
-	slantSeparation = 4
+	slantSeparation = Value(4)
 	projectionResolution = (96, 54)
 
 #Raspberry pi camera
@@ -79,6 +95,11 @@ class VehicleInformation:
 	coveredDistance = 34#m
 	averageSpeed = 22#m/s
 
+class UIInformation:
+
+	depthLoaded = False
+	loadingText = "Initializing"
+
 
 
 
@@ -89,6 +110,8 @@ class ClientData:
 	reducedFrames = []#type: RawFrameData
 	depthFrames = []#type: DepthFrameData
 
+	connectionValues = ConnectionValues
+	navigationValues = NavigationValues
 	modelValues = ModelValues
 	cloudValues = CloudValues
 	projectorValues = ProjectorValues
@@ -96,6 +119,7 @@ class ClientData:
 	cloudInformation = CloudInformation
 	modelInformation = ModelInformation
 	vehicleInformation = VehicleInformation
+	uiInformation = UIInformation
 
 	def SetUpData():
 		CloudSetValues = ClientData.cloudValues
@@ -146,13 +170,17 @@ class ClientData:
 # f4.rawFrameData.cameraRotation = 45
 
 
-f1 = RawFrameData()
+# f1 = RawFrameData()
 
-# f1.depth = np.load('mapping/testdata/i1.npy')/1.5# * 10
-f1.image = cv.imread('mapping/testdata/i1.jpg')
-f1.cameraPosition = (0,0,0)
-f1.cameraRotation = 0
+# f1.image = cv.imread('mapping/testdata/default.png')
+# f1.cameraPosition = (0,0,0)
+# f1.cameraRotation = 0
 
+# cvi = cv.imread('mapping/testdata/default.png')
+# pili = np.clip(np.asarray(Image.open('mapping/testdata/default.png'), dtype=float) / 255, 0, 1)
 
-ClientData.reducedFrames.extend([f1])
+# print(cvi)
+# print(pili)
+
+# ClientData.reducedFrames.extend([f1])
 # ClientData.depthFrames.extend([f1, f2])
