@@ -99,6 +99,7 @@ class UIInformation:
 
 	depthLoaded = False
 	loadingText = "Initializing"
+	viewType = 0
 
 
 
