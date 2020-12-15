@@ -37,8 +37,8 @@ class MapperThread(threading.Thread):
 			m = ModelPreview()	
 			m.addRenderable(self.aggregate.projection.getModelRenderable())
 
-			for i in self.aggregate.frames:
-				m.addCamera(i.getCamera())
+			# for i in self.aggregate.frames:
+			# 	m.addCamera(i.getCamera())
 
 			m.addRenderables(self.aggregate.projection.cloudSet.getCloudRenderables())
 			time.sleep(1)
@@ -65,3 +65,8 @@ class MapperThread(threading.Thread):
 	def exportModel(self):
 		ClientData.triggers.exportModelTrigger = True
 
+
+if __name__ == "__main__":
+
+	u = MapperThread()
+	u.start()

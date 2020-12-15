@@ -38,7 +38,7 @@ class NavigationValues:
 class ModelValues:
 
 	modelThreshold = Value(1)
-	exportPath = Value("Model.obj")
+	exportPath = "Model.obj"
 
 
 class CloudValues:
