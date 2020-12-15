@@ -25,6 +25,8 @@ class ConnectionValues:
 
 	ip = Value('127.0.0.1')
 	port = Value(33456)
+	port2 = Value(33457)
+	port3 = Value(33458)
 
 class NavigationValues:
 
@@ -100,6 +102,12 @@ class UIInformation:
 	depthLoaded = False
 	loadingText = "Initializing"
 	viewType = 0
+	motion = 0
+	distance = 0
+	avg_speed = 0
+	ultrasonic = 0
+	location = 0
+	rotation = 0
 
 
 

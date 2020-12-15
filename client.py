@@ -3,6 +3,8 @@ import time
 from mapper_thread import *
 from depth_thread import *
 from ui_thread import *
+from recieve_thread import *
+from send_thread import *
 
 from client_data import *
 
@@ -17,6 +19,9 @@ class Client:
 		self.threads.append(self.depthThread)
 		self.uithread = UIThread()
 		self.threads.append(self.uithread)
+		self.recieveThread = RecieveThread()
+		self.threads.append(self.recieveThread)
+		self.sendThread = SendThread()
 
 		self.setUpData()
 		self.startThreads()
