@@ -11,6 +11,7 @@ class UIThread(threading.Thread):
 	def __init__(self):
 		threading.Thread.__init__(self)
 		self.loadComplete = False
+		self.setDaemon(True)
 
 	def setUpUI(self):
 		self.app = QtWidgets.QApplication(sys.argv)
@@ -33,6 +34,10 @@ class UIThread(threading.Thread):
 			self.ui.INP_cloud : ClientData.cloudValues.cloudScale,
 			self.ui.INP_slant : ClientData.projectorValues.slantSeparation
 		}
+
+	def mainThreadUpdate(self):
+		if ClientData.uiInformation.depthLoaded:
+			self.setupWindow()
 
 	def updateLinkedValue(self, lineWidget):
 		self.links[lineWidget].value = lineWidget.text()

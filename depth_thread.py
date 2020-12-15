@@ -10,6 +10,7 @@ class DepthThread(threading.Thread):
 
 	def __init__(self):
 		threading.Thread.__init__(self)
+		self.setDaemon(True)
 
 	def init_thread(self):
 		from dense_depth.depth_extractor import DepthExtractor
@@ -25,6 +26,10 @@ class DepthThread(threading.Thread):
 		print("Loaded Depth")
 		ClientData.uiInformation.loadingText = "Loading completed"
 		ClientData.uiInformation.depthLoaded = True
+
+
+	def mainThreadUpdate(self):
+		pass
 
 	def run(self):
 		self.init_thread()

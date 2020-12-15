@@ -9,12 +9,15 @@ from client_data import *
 class Client:
 
 	def __init__(self):
+		self.threads = []
+
 		self.mapperThread = MapperThread()
+		self.threads.append(self.mapperThread)
 		self.depthThread = DepthThread()
+		self.threads.append(self.depthThread)
 		self.uithread = UIThread()
-		self.mapperThread.setDaemon(True)
-		self.depthThread.setDaemon(True)
-		self.uithread.setDaemon(True)
+		self.threads.append(self.uithread)
+
 		self.setUpData()
 		self.startThreads()
 
@@ -22,14 +25,13 @@ class Client:
 		ClientData.SetUpData()
 
 	def startThreads(self):
-		self.uithread.start()
-		self.mapperThread.start()
-		self.depthThread.start()
+		for i in self.threads:
+			i.start()
 
 		while True:
 			time.sleep(0.1)
-			if (ClientData.uiInformation.depthLoaded):
-				self.uithread.setupWindow()
+			for i in self.threads:
+				i.mainThreadUpdate()
 
 	def showModel(self):
 		self.mapperThread.showModel()

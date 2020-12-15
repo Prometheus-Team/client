@@ -105,6 +105,18 @@ class UIInformation:
 
 
 
+class Triggers: 
+	showModelTrigger = False
+	exportModelTrigger = False
+
+
+
+
+
+
+
+
+
 class ClientData:
 
 	rawFrames = []#type: RawFrameData
@@ -121,6 +133,8 @@ class ClientData:
 	modelInformation = ModelInformation
 	vehicleInformation = VehicleInformation
 	uiInformation = UIInformation
+
+	triggers = Triggers
 
 	def SetUpData():
 		CloudSetValues = ClientData.cloudValues
@@ -171,11 +185,11 @@ class ClientData:
 # f4.rawFrameData.cameraRotation = 45
 
 
-# f1 = RawFrameData()
+f1 = RawFrameData()
 
-# f1.image = cv.imread('mapping/testdata/default.png')
-# f1.cameraPosition = (0,0,0)
-# f1.cameraRotation = 0
+f1.image = cv.imread('mapping/testdata/default.png')
+f1.cameraPosition = (0,0,0)
+f1.cameraRotation = 0
 
 # cvi = cv.imread('mapping/testdata/default.png')
 # pili = np.clip(np.asarray(Image.open('mapping/testdata/default.png'), dtype=float) / 255, 0, 1)
@@ -183,5 +197,5 @@ class ClientData:
 # print(cvi)
 # print(pili)
 
-# ClientData.reducedFrames.extend([f1])
+ClientData.reducedFrames.extend([f1 for i in range(1)])
 # ClientData.depthFrames.extend([f1, f2])
