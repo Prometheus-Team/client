@@ -94,6 +94,7 @@ class VehicleInformation:
 	rotation = 23#degrees
 	coveredDistance = 34#m
 	averageSpeed = 22#m/s
+	locationBitmap = np.ones((500,500))
 
 class UIInformation:
 
@@ -138,6 +139,9 @@ class ClientData:
 	def SetUpData():
 		CloudSetValues = ClientData.cloudValues
 		ModelValues = ClientData.modelValues
+		ClientData.vehicleInformation.locationBitmap[100:400, 100:400] = 0
+		ClientData.vehicleInformation.locationBitmap[150:200, 0:200] = 1
+		ClientData.vehicleInformation.locationBitmap[240:260, 240:260] = 2
 
 
 ###
@@ -198,3 +202,5 @@ f1.cameraRotation = 0
 
 ClientData.reducedFrames.extend([f1 for i in range(1)])
 # ClientData.depthFrames.extend([f1, f2])
+
+ClientData.SetUpData()
