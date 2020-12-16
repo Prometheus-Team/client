@@ -8,30 +8,43 @@ sys.path.append('../Frame-Reduction-Module')
 pollRate = 0.1
 
 
-class RecieveThread(threading.Thread):
+class FrameReduceThread(threading.Thread):
 
-    def __init__(self,):
-        threading.Thread.__init__(self)
-        self.setDaemon(True)
+	def __init__(self,):
+		threading.Thread.__init__(self)
+		self.setDaemon(True)
 		self.imagesforProcessing = []
 
-    def mainThreadUpdate(self):
-        pass
+	def mainThreadUpdate(self):
+		pass
 
-    def run(self):
-        print('started mapper thread')
-        while True:
-            time.sleep(pollRate)
-            self.poll()
+	def run(self):
+		print('started mapper thread')
+		while True:
+			# time.sleep(pollRate)
+			self.poll()
 
-    def poll(self):
-        if len(ClientData.rawFrames) > 10:
+	def poll(self):
+		if len(ClientData.rawFrames) > 10:
+			print("here")
 			for i in range(10):
-				self.imagesforProcessing.append(ClientData.rawFrames.image)
+				self.imagesforProcessing.append(ClientData.rawFrames[i].image)
+				# [x['a'] for x in a]
+
 			reducerClass = reducer_class.Reducer(self.imagesforProcessing, 5, 500)
-            images = reducerClass.get_images()
+			images = reducerClass.get_images()
+
 			for eachImage in images:
 				index = eachImage[1]
-				ClientData.reducedFrames.append(RawFrameData(eachImage[0],ClientData.rawFrames[index].location, ClientData.rawFrames[index].rotation))
+				newRawFrame = RawFrameData(
+					eachImage[0], ClientData.rawFrames[index].cameraPosition, ClientData.rawFrames[index].cameraRotation)
+				ClientData.reducedFrames.append(newRawFrame)
+				print(newRawFrame)
 
-            del ClientData.rawFrames[:10]
+			del ClientData.rawFrames[:10]
+
+
+if __name__ == "__main__":
+	halu = FrameReduceThread()
+	halu.start()
+	time.sleep(100)
