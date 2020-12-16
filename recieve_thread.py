@@ -6,7 +6,7 @@ import time
 from client_data import *
 
 pollRate = 0.05
-
+recievePort = 9998
 
 class RecieveThread(threading.Thread):
 
@@ -19,28 +19,51 @@ class RecieveThread(threading.Thread):
 		pass
 
 	def run(self):
-		print('started mapper thread')
 		while True:
 			time.sleep(pollRate)
 			self.poll()
 
 	def poll(self):
 		with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-			s.bind((ConnectionValues.ip, ConnectionValues.port2))
+			# s.bind(('', 9998))
+			# s.listen()
+			# conn, addr = s.accept()
 			while True:
-				s.listen()
-				conn, addr = s.accept()
-				print('Connected by', addr)
-				data = conn.recv(4096)
-				if not data:
-					pass
-				fetchedInformation = pickle.loads(data)
-				self.assignValues(fetchedInformation)
+				try:
+					s.connect(('192.168.0.134', recievePort))
+					while True:
+						data = s.recv(4096)
+						print("D", data)
+						if data == b'':
+							break
+						fetchedInformation = pickle.loads(data)
+						self.assignValues(fetchedInformation)
+				except:
+					print("Cannot find info host")
 
 	def assignValues(self, fetchedData):
-		UIInformation.motion = fetchedData["motion"]
-		UIInformation.distance = fetchedData["distance"]
-		UIInformation.avg_speed=fetchedData["avg_speed"]
-		UIInformation.ultrasonic=fetchedData["ultrasonic"]
-		UIInformation.location=fetchedData["location"]
-		UIInformation.rotation=fetchedData["rotation"]
+		ClientData.uiInformation.distance = fetchedData["frontDistance"]
+		ClientData.uiInformation.avg_speed = fetchedData["speed"]
+		ClientData.uiInformation.ultrasonic = fetchedData["batteryLevel"]
+
+		frameInformation = FrameInformation()
+
+		frameInformation.location = fetchedData["location"]
+		frameInformation.rotation = fetchedData["heading"]
+		frameInformation.frameHash = fetchedData["imageSha"]
+
+		ClientData.uiInformation.waitingFrameInformation.append(frameInformation)
+
+		print(ClientData.uiInformation.motion, ClientData.uiInformation.distance)
+		print(len(ClientData.uiInformation.waitingFrameInformation))
+		print(frameInformation.frameHash)
+
+
+
+if __name__ == "__main__":
+
+	u = RecieveThread()
+	u.start()
+
+	while True:
+		time.sleep(0.1)

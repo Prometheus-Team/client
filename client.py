@@ -3,8 +3,9 @@ import time
 from mapper_thread import *
 from depth_thread import *
 from ui_thread import *
+from frame_thread import *
 from recieve_thread import *
-from send_thread import *
+# from send_thread import *
 
 from client_data import *
 
@@ -21,7 +22,9 @@ class Client:
 		self.threads.append(self.uithread)
 		self.recieveThread = RecieveThread()
 		self.threads.append(self.recieveThread)
-		self.sendThread = SendThread()
+		self.frameThread = FrameThread()
+		self.threads.append(self.frameThread)
+		# self.sendThread = SendThread()
 
 		self.setUpData()
 		self.startThreads()
@@ -33,10 +36,15 @@ class Client:
 		for i in self.threads:
 			i.start()
 
+		# k = 0
+
 		while True:
+			# k+=1
 			time.sleep(0.1)
 			for i in self.threads:
 				i.mainThreadUpdate()
+				# if k == 10:
+				# 	ClientData.uiInformation.depthLoaded = True
 
 	def showModel(self):
 		self.mapperThread.showModel()
@@ -47,9 +55,6 @@ class Client:
 	def exit(self):
 		quit()
 
-import os
-
 c = Client()
-time.sleep(30)
 # c.showModel()
 # c.exportModel()

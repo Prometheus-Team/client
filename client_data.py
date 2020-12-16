@@ -1,6 +1,7 @@
 import numpy as np
 import cv2 as cv
 from PIL import Image
+import hashlib
 
 class Value:
 
@@ -9,10 +10,15 @@ class Value:
 
 class RawFrameData:
 
-	def __init__(self):
-		self.image = None
-		self.cameraPosition = None
-		self.cameraRotation = 0
+	def __init__(self, image = None, location = None, rotation = None):
+
+		if type(image) == str:
+			self.image = cv.imread(image)
+		else:
+			self.image = image
+			
+		self.cameraPosition = location
+		self.cameraRotation = rotation
 		self.time = 0
 
 class DepthFrameData:
@@ -103,13 +109,28 @@ class UIInformation:
 	depthLoaded = False
 	loadingText = "Initializing"
 	viewType = 0
+
+	waitingFrames = []
+	waitingFrameInformation = []
 	motion = 0
 	distance = 0
 	avg_speed = 0
 	ultrasonic = 0
-	location = 0
-	rotation = 0
 
+class FrameInformation:
+
+	def __init__(self, frameHash = '', location = (0,0), rotation = 0):
+		self.frameHash = frameHash
+		self.location = location
+		self.rotation = rotation
+		self.checked = 0
+
+class WaitingFrame:
+
+	def __init__(self, image = None, frameHash = ''):
+		self.image = image
+		self.frameHash = frameHash
+		self.checked = 0
 
 
 
@@ -148,9 +169,12 @@ class ClientData:
 	def SetUpData():
 		CloudSetValues = ClientData.cloudValues
 		ModelValues = ClientData.modelValues
+
 		ClientData.vehicleInformation.locationBitmap[100:400, 100:400] = 0
 		ClientData.vehicleInformation.locationBitmap[150:200, 0:200] = 1
 		ClientData.vehicleInformation.locationBitmap[240:260, 240:260] = 2
+
+
 
 
 ###
@@ -197,19 +221,78 @@ class ClientData:
 # f4.rawFrameData.cameraRotation = 45
 
 
-f1 = RawFrameData()
+# f1 = RawFrameData()
 
-f1.image = cv.imread('mapping/testdata/default.png')
-f1.cameraPosition = (0,0,0)
-f1.cameraRotation = 0
+# f1.image = cv.imread('mapping/testdata/default.png')
+# f1.cameraPosition = (0,0,0)
+# f1.cameraRotation = 0
 
-# cvi = cv.imread('mapping/testdata/default.png')
+image = cv.imread('mapping/testdata/default.png')
+ClientData.uiInformation.waitingFrames.append(WaitingFrame(image, hashlib.sha1(image).hexdigest()))
+image = cv.imread('mapping/testdata/i2.jpg')
+ClientData.uiInformation.waitingFrames.append(WaitingFrame(image, hashlib.sha1(image).hexdigest()))
+image = cv.imread('mapping/testdata/i3.jpg')
+ClientData.uiInformation.waitingFrames.append(WaitingFrame(image, hashlib.sha1(image).hexdigest()))
+image = cv.imread('mapping/testdata/i4.jpg')
+ClientData.uiInformation.waitingFrames.append(WaitingFrame(image, hashlib.sha1(image).hexdigest()))
+
+
+image = cv.imread('mapping/testdata/1_image.png')
+ClientData.uiInformation.waitingFrameInformation.append(FrameInformation(hashlib.sha1(image).hexdigest(), (1,1), 3))
+image = cv.imread('mapping/testdata/i2.jpg')
+ClientData.uiInformation.waitingFrameInformation.append(FrameInformation(hashlib.sha1(image).hexdigest(), (1,6), 0))
+image = cv.imread('mapping/testdata/i3.jpg')
+ClientData.uiInformation.waitingFrameInformation.append(FrameInformation(hashlib.sha1(image).hexdigest(), (3,8), -3))
+image = cv.imread('mapping/testdata/i4.jpg')
+ClientData.uiInformation.waitingFrameInformation.append(FrameInformation(hashlib.sha1(image).hexdigest(), (-4,0), 6))
+
+
+# ClientData.reducedFrames.append(RawFrameData('mapping/testdata/default.png', (0,0,0), 0))
+
+
+# ClientData.reducedFrames.append(RawFrameData('mapping/testdata/i1.jpg', (0,0,0), 0))
+# ClientData.reducedFrames.append(RawFrameData('mapping/testdata/i2.jpg', (0,0,1), 0))
+# ClientData.reducedFrames.append(RawFrameData('mapping/testdata/i3.jpg', (0,0,0), 45))
+# ClientData.reducedFrames.append(RawFrameData('mapping/testdata/i4.jpg', (0,0,4), 45))
+
+ClientData.reducedFrames.append(RawFrameData('../samples/1_1.jpg', (0,0,0), 0))
+# ClientData.reducedFrames.append(RawFrameData('../samples/1_2.jpg', (0,0,0), 45))
+# ClientData.reducedFrames.append(RawFrameData('../samples/1_3.jpg', (0,0,0), 90))
+# ClientData.reducedFrames.append(RawFrameData('../samples/2_1.jpg', (0,0,1), -45))
+# ClientData.reducedFrames.append(RawFrameData('../samples/2_2.jpg', (0,0,1), 0))
+# ClientData.reducedFrames.append(RawFrameData('../samples/2_3.jpg', (0,0,1), 45))
+# ClientData.reducedFrames.append(RawFrameData('../samples/2_4.jpg', (0,0,1), 90))
+# ClientData.reducedFrames.append(RawFrameData('../samples/3_1.jpg', (0,0,2), -45))
+# ClientData.reducedFrames.append(RawFrameData('../samples/3_2.jpg', (0,0,2), 0))
+# ClientData.reducedFrames.append(RawFrameData('../samples/3_3.jpg', (0,0,2), 45))
+# ClientData.reducedFrames.append(RawFrameData('../samples/3_4.jpg', (0,0,2), 90))
+# ClientData.reducedFrames.append(RawFrameData('../samples/4_1.jpg', (1,0,2), -45))
+# ClientData.reducedFrames.append(RawFrameData('../samples/4_2.jpg', (1,0,2), 0))
+# ClientData.reducedFrames.append(RawFrameData('../samples/4_3.jpg', (1,0,2), 45))
+# ClientData.reducedFrames.append(RawFrameData('../samples/4_4.jpg', (1,0,2), 90))
+# ClientData.reducedFrames.append(RawFrameData('../samples/4_5.jpg', (1,0,2), 135))
+# ClientData.reducedFrames.append(RawFrameData('../samples/4_6.jpg', (1,0,2), 180))
+# ClientData.reducedFrames.append(RawFrameData('../samples/5_1.jpg', (1,0,1), -45))
+# ClientData.reducedFrames.append(RawFrameData('../samples/5_2.jpg', (1,0,1), 0))
+# ClientData.reducedFrames.append(RawFrameData('../samples/5_3.jpg', (1,0,1), 45))
+# ClientData.reducedFrames.append(RawFrameData('../samples/5_4.jpg', (1,0,1), 90))
+# ClientData.reducedFrames.append(RawFrameData('../samples/5_5.jpg', (1,0,1), 135))
+# ClientData.reducedFrames.append(RawFrameData('../samples/5_6.jpg', (1,0,1), 180))
+# ClientData.reducedFrames.append(RawFrameData('../samples/6_1.jpg', (1,0,0), 0))
+# ClientData.reducedFrames.append(RawFrameData('../samples/6_2.jpg', (1,0,0), 45))
+# ClientData.reducedFrames.append(RawFrameData('../samples/6_3.jpg', (1,0,0), 90))
+# ClientData.reducedFrames.append(RawFrameData('../samples/6_4.jpg', (1,0,0), 135))
+
+
+
+
+# cvi = cv.imread('mapping/testdata/default.png'5
 # pili = np.clip(np.asarray(Image.open('mapping/testdata/default.png'), dtype=float) / 255, 0, 1)
 
 # print(cvi)
 # print(pili)
 
-ClientData.reducedFrames.extend([f1 for i in range(1)])
+# ClientData.reducedFrames.extend([f1 for i in range(1)])
 # ClientData.depthFrames.extend([f1, f2])
 
-ClientData.SetUpData()
+# ClientData.SetUpData()
