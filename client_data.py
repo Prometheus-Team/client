@@ -29,7 +29,7 @@ class DepthFrameData:
 
 class ConnectionValues:
 
-	ip = Value('127.0.0.1')
+	ip = Value('192.168.0.147')
 	port = Value(33456)
 	port2 = Value(33457)
 	port3 = Value(33458)
@@ -227,27 +227,27 @@ class ClientData:
 # f1.cameraPosition = (0,0,0)
 # f1.cameraRotation = 0
 
-image = cv.imread('mapping/testdata/default.png')
-ClientData.uiInformation.waitingFrames.append(WaitingFrame(image, hashlib.sha1(image).hexdigest()))
-image = cv.imread('mapping/testdata/i2.jpg')
-ClientData.uiInformation.waitingFrames.append(WaitingFrame(image, hashlib.sha1(image).hexdigest()))
-image = cv.imread('mapping/testdata/i3.jpg')
-ClientData.uiInformation.waitingFrames.append(WaitingFrame(image, hashlib.sha1(image).hexdigest()))
-image = cv.imread('mapping/testdata/i4.jpg')
-ClientData.uiInformation.waitingFrames.append(WaitingFrame(image, hashlib.sha1(image).hexdigest()))
+# image = cv.imread('mapping/testdata/default.png')
+# ClientData.uiInformation.waitingFrames.append(WaitingFrame(image, hashlib.sha1(image).hexdigest()))
+# image = cv.imread('mapping/testdata/i2.jpg')
+# ClientData.uiInformation.waitingFrames.append(WaitingFrame(image, hashlib.sha1(image).hexdigest()))
+# image = cv.imread('mapping/testdata/i3.jpg')
+# ClientData.uiInformation.waitingFrames.append(WaitingFrame(image, hashlib.sha1(image).hexdigest()))
+# image = cv.imread('mapping/testdata/i4.jpg')
+# ClientData.uiInformation.waitingFrames.append(WaitingFrame(image, hashlib.sha1(image).hexdigest()))
 
 
-image = cv.imread('mapping/testdata/1_image.png')
-ClientData.uiInformation.waitingFrameInformation.append(FrameInformation(hashlib.sha1(image).hexdigest(), (1,1), 3))
-image = cv.imread('mapping/testdata/i2.jpg')
-ClientData.uiInformation.waitingFrameInformation.append(FrameInformation(hashlib.sha1(image).hexdigest(), (1,6), 0))
-image = cv.imread('mapping/testdata/i3.jpg')
-ClientData.uiInformation.waitingFrameInformation.append(FrameInformation(hashlib.sha1(image).hexdigest(), (3,8), -3))
-image = cv.imread('mapping/testdata/i4.jpg')
-ClientData.uiInformation.waitingFrameInformation.append(FrameInformation(hashlib.sha1(image).hexdigest(), (-4,0), 6))
+# image = cv.imread('mapping/testdata/1_image.png')
+# ClientData.uiInformation.waitingFrameInformation.append(FrameInformation(hashlib.sha1(image).hexdigest(), (1,1), 3))
+# image = cv.imread('mapping/testdata/i2.jpg')
+# ClientData.uiInformation.waitingFrameInformation.append(FrameInformation(hashlib.sha1(image).hexdigest(), (1,6), 0))
+# image = cv.imread('mapping/testdata/i3.jpg')
+# ClientData.uiInformation.waitingFrameInformation.append(FrameInformation(hashlib.sha1(image).hexdigest(), (3,8), -3))
+# image = cv.imread('mapping/testdata/i4.jpg')
+# ClientData.uiInformation.waitingFrameInformation.append(FrameInformation(hashlib.sha1(image).hexdigest(), (-4,0), 6))
 
 
-# ClientData.reducedFrames.append(RawFrameData('mapping/testdata/default.png', (0,0,0), 0))
+ClientData.reducedFrames.append(RawFrameData('mapping/testdata/default.png', (0,0,0), 0))
 
 
 # ClientData.reducedFrames.append(RawFrameData('mapping/testdata/i1.jpg', (0,0,0), 0))
@@ -255,7 +255,7 @@ ClientData.uiInformation.waitingFrameInformation.append(FrameInformation(hashlib
 # ClientData.reducedFrames.append(RawFrameData('mapping/testdata/i3.jpg', (0,0,0), 45))
 # ClientData.reducedFrames.append(RawFrameData('mapping/testdata/i4.jpg', (0,0,4), 45))
 
-ClientData.reducedFrames.append(RawFrameData('../samples/1_1.jpg', (0,0,0), 0))
+# ClientData.reducedFrames.append(RawFrameData('../samples/1_1.jpg', (0,0,0), 0))
 # ClientData.reducedFrames.append(RawFrameData('../samples/1_2.jpg', (0,0,0), 45))
 # ClientData.reducedFrames.append(RawFrameData('../samples/1_3.jpg', (0,0,0), 90))
 # ClientData.reducedFrames.append(RawFrameData('../samples/2_1.jpg', (0,0,1), -45))
