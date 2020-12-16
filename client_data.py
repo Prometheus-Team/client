@@ -96,6 +96,7 @@ class VehicleInformation:
 	rotation = 23#degrees
 	coveredDistance = 34#m
 	averageSpeed = 22#m/s
+	locationBitmap = []
 
 class UIInformation:
 
